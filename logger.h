@@ -20,6 +20,17 @@
 #define FOR_EACH_7(func, arg, ...) do { FOR_EACH_1(func, arg); FOR_EACH_6(func, __VA_ARGS__); } while (0)
 #define FOR_EACH_8(func, arg, ...) do { FOR_EACH_1(func, arg); FOR_EACH_7(func, __VA_ARGS__); } while (0)
 
+#define REDUCE(func, ...) REDUCE_(NARG(__VA_ARGS__), func, ##__VA_ARGS__)
+#define REDUCE_(num, func, ...) EXPAND(CONCATENATE(REDUCE_, num)(func, ##__VA_ARGS__))
+
+#define REDUCE_2(func, arg1, arg2) func(arg1, arg2)
+#define REDUCE_3(func, arg1, arg2, ...) REDUCE_2(func, REDUCE_2(func, arg1, arg2), __VA_ARGS__)
+#define REDUCE_4(func, arg1, arg2, ...) REDUCE_3(func, REDUCE_2(func, arg1, arg2), __VA_ARGS__)
+#define REDUCE_5(func, arg1, arg2, ...) REDUCE_4(func, REDUCE_2(func, arg1, arg2), __VA_ARGS__)
+#define REDUCE_6(func, arg1, arg2, ...) REDUCE_5(func, REDUCE_2(func, arg1, arg2), __VA_ARGS__)
+#define REDUCE_7(func, arg1, arg2, ...) REDUCE_6(func, REDUCE_2(func, arg1, arg2), __VA_ARGS__)
+#define REDUCE_8(func, arg1, arg2, ...) REDUCE_7(func, REDUCE_2(func, arg1, arg2), __VA_ARGS__)
+
 #define EXTEND(...) EXTEND_(NARG(__VA_ARGS__), __VA_ARGS__)
 #define EXTEND_(N, ...) EXPAND(CONCATENATE(EXTEND_, N))(__VA_ARGS__)
 #define EXTEND_1(x, ...) #x, x

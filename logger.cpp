@@ -22,8 +22,49 @@ TEST(Logger, ForEach)
   int sum = 0;
   auto f = [&sum] (int n) { return sum += n; };
 
+  FOR_EACH(f, 1);
+  EXPECT_EQ(1, sum);
+
+  sum = 0;
+  FOR_EACH(f, 1, 2);
+  EXPECT_EQ(3, sum);
+
+  sum = 0;
+  FOR_EACH(f, 1, 2, 3);
+  EXPECT_EQ(6, sum);
+
+  sum = 0;
+  FOR_EACH(f, 1, 2, 3, 4);
+  EXPECT_EQ(10, sum);
+
+  sum = 0;
+  FOR_EACH(f, 1, 2, 3, 4, 5);
+  EXPECT_EQ(15, sum);
+
+  sum = 0;
+  FOR_EACH(f, 1, 2, 3, 4, 5, 6);
+  EXPECT_EQ(21, sum);
+
+  sum = 0;
+  FOR_EACH(f, 1, 2, 3, 4, 5, 6, 7);
+  EXPECT_EQ(28, sum);
+
+  sum = 0;
   FOR_EACH(f, 1, 2, 3, 4, 5, 6, 7, 8);
   EXPECT_EQ(36, sum);
+}
+
+TEST(Logger, Reduce)
+{
+  auto f = [] (int m, int n) { return m + n; };
+
+  EXPECT_EQ(3, REDUCE(f, 1, 2));
+  EXPECT_EQ(6, REDUCE(f, 1, 2, 3));
+  EXPECT_EQ(10, REDUCE(f, 1, 2, 3, 4));
+  EXPECT_EQ(15, REDUCE(f, 1, 2, 3, 4, 5));
+  EXPECT_EQ(21, REDUCE(f, 1, 2, 3, 4, 5, 6));
+  EXPECT_EQ(28, REDUCE(f, 1, 2, 3, 4, 5, 6, 7));
+  EXPECT_EQ(36, REDUCE(f, 1, 2, 3, 4, 5, 6, 7, 8));
 }
 
 class TestLogger : public ::testing::Test
