@@ -6,6 +6,7 @@
 
 TEST(Logger, NumArgs)
 {
+  ASSERT_EQ(0, NARG());
   ASSERT_EQ(1, NARG(0));
   ASSERT_EQ(2, NARG(0, 1));
   ASSERT_EQ(3, NARG(0, 1, 2));

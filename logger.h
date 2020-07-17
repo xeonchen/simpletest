@@ -3,10 +3,10 @@
 
 #define EXPAND(x) x
 #define CONCATENATE(x, y) x##y
-#define NARG(...) NARG_(__VA_ARGS__, RSEQ_N())
+#define NARG(...) NARG_(, ##__VA_ARGS__, RSEQ_N())
 #define NARG_(...) EXPAND(ARG_N(__VA_ARGS__))
-#define ARG_N(_1, _2, _3, _4, _5, _6, _7, _8, N, ...) N
-#define RSEQ_N() 8, 7, 6, 5, 4, 3, 2, 1
+#define ARG_N(_1, _2, _3, _4, _5, _6, _7, _8, _9, N, ...) N
+#define RSEQ_N() 8, 7, 6, 5, 4, 3, 2, 1, 0
 
 #define FOR_EACH(func, ...) FOR_EACH_(NARG(__VA_ARGS__), func, __VA_ARGS__)
 #define FOR_EACH_(num, func, ...) EXPAND(CONCATENATE(FOR_EACH_, num)(func, __VA_ARGS__))
